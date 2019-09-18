@@ -47,7 +47,7 @@ automation. Determining what changed at an interface level in the best case requ
 files in the repository, but for most of our industry you can assume a human is required.
 </p>
 
-<h2> A Sane Way Forward </h2>
+<h2> A Sane(?) Way Forward </h2>
 
 <p>
 Are you releasing software to other developers who are making concious choices on when and how to depend on your software,
@@ -61,9 +61,11 @@ When trying to communicate a feature or a bugfix, whats easier, "/foo was added 
 2008.02.28" ?
 </p><!–– 23 skidoo ––>
 
-<p><li>
-Right, so <b> lets use a date. </b>
-</p></li>
+<ul>
+  <li>
+  Right, so <b> lets use a date. </b>
+  </li>
+</ul>
 
 <p>
 Who's date? The date the customer sees it or the date the developer wrote it? Hopefully you have a continuous deployment
@@ -71,17 +73,18 @@ pipeline in place, in which the customer gets an evergreen version without think
 should be developer centric.
 </p>
 
-<p><li>
-So <b> lets use the commit date of the code.</b> (All artifacts are generated from source control right?)
-</p></li>
+<ul>
+  <li>
+  So <b> lets use the commit date of the code.</b> (All artifacts are generated from source control right?)
+  </li>
+  <li>
+  But which branch? Oh no. So <b> lets add the commit sha.</b> But not too long there.
+  </li>
 
-<p><li>
-But which branch? Oh no. So <b> lets add the commit sha.</b> But not too long there.
-</p></li>
-
-<p><li>
-  <b> Oh and I want it sortable. </b>
-</p></li>
+  <li>
+    <b> Oh and I want it sortable. </b>
+  </li>
+</ul>
 
 So lets use:
 <h1> YEARMONTHDAYHOURMINUTE-SHORTGITSHA, ex: 201909031732-aa314da </h1>
@@ -91,7 +94,7 @@ So lets use:
 
 #!/usr/bin/env bash
 # -- samver
-# -- in a git repo, spits out a good version
+# -- in a git repo, spits out a goodly version
 
 if date --version 2>/dev/null; then
   # GNU
