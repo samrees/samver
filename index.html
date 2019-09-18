@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Language" content="en" />
+    <title>Sam's Versioning</title>
+    <meta name="Description" content="Sam's Versioning: semver is meh" />
+    <meta name="Keywords" content="samver versioning semver" />
+    <meta name="why_are_you_awake_right_now?" content="http://www.principiadiscordia.com/bip/5.php" />
+  </head>
+<body>
+
+<h1> Sam's Versioning: Samver </h1>
+
+<h2> Stop Abusing Semver </h2>
+
+<p>
+I like semver. I work as a systems folk, and I end up neck deep in other peoples' dependencies more often than I would
+like. For libraries, semver is pretty good.
+</p>
+
+<p>
+That said, I've run into a cult of programmers who see semver as the best thing next to Jesus coming back for solving
+all their problems. And they go to alllll the meetings. Some things I've heard:
+
+<ul>
+  <li> Making an API for an external bank? Put semver in the URL so they can pick their version! </li>
+  <li> Oh you're on version 1.124.0 huh? That many commits and not a single breaking change. Right. </li>
+  <li> 0.2.191. In a Jenkins job. </li>
+  <li> A Helm chart wraps a Docker container which wraps a binary, and two sidecars. They <i>all</i> have different
+    semvers. Question for the audience: What broke?</li>
+  <li> Tried out Go modules yet? How many 0.0.0-x-y modules can you find. </li>
+  <li> Chef Cookbooks. Theres no better way to discover a patch bump was a lie than 2000 servers telling you in slack.</li>
+</ul>
+
+<p>
+Maybe this is just from working on infrastructure, but if you make an API, don't break it. Make a new thing, name it
+something else, figure out the migration that makes sense for you and your customers. And if you're communicating major
+releases in a better way, theres probably a good chance you could learn to communicate features and bugfixes in better
+ways than trying to encode them into a single number.
+</p>
+
+<p>
+I'd also like to note when dealing with automated CI/CD pipelines, the developer must always specify the semver to the
+automation. Determining what changed at an interface level in the best case requires scraping contrived commits or doc
+files in the repository, but for most of our industry you can assume a human is required.
+</p>
+
+<h2> A Sane Way Forward </h2>
+
+<p>
+Are you releasing software to other developers who are making concious choices on when and how to depend on your software,
+as part of a dependency tool (like ruby gems) across an organizational boundary? Then maybe use semver.
+</p>
+
+<h4> OTHERWISE </h4>
+
+<p>
+When trying to communicate a feature or a bugfix, whats easier, "/foo was added in version 27" or "/foo was added in
+2008.02.28" ?
+</p><!–– 23 skidoo ––>
+
+<p><li>
+Right, so <b> lets use a date. </b>
+</p></li>
+
+<p>
+Who's date? The date the customer sees it or the date the developer wrote it? Hopefully you have a continuous deployment
+pipeline in place, in which the customer gets an evergreen version without thinking about it, in which case our versioning
+should be developer centric.
+</p>
+
+<p><li>
+So <b> lets use the commit date of the code.</b> (All artifacts are generated from source control right?)
+</p></li>
+
+<p><li>
+But which branch? Oh no. So <b> lets add the commit sha.</b> But not too long there.
+</p></li>
+
+<p><li>
+  <b> Oh and I want it sortable. </b>
+</p></li>
+
+So lets use:
+<h1> YEARMONTHDAYHOURMINUTE-SHORTGITSHA, ex: 201909031732-aa314da </h1>
+
+<p>
+<pre>
+
+#!/usr/bin/env bash
+# -- samver
+# -- in a git repo, spits out a good version
+
+if date --version 2>/dev/null; then
+  # GNU
+  echo $(date --utc --date="$(git show -s --format=%ci)" +%Y%m%d%H%M)-$(git rev-parse --short HEAD)
+else
+  # BSD
+  echo $(date -u -j -f %s $(git show -s --format=%ct) +%Y%m%d%H%M)-$(git rev-parse --short HEAD)
+fi
+</pre>
+</p>
+
+<pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Of course its in UTC, why would you ask that, come on.
+</body>
+</html>
