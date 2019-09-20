@@ -4,8 +4,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta http-equiv="Content-Language" content="en" />
-    <title>Sam's Versioning</title>
-    <meta name="Description" content="Sam's Versioning: semver is meh" />
+    <title>Samver</title>
+    <meta name="Description" content="A Semver Alternative" />
     <meta name="Keywords" content="samver versioning semver" />
     <meta name="why_are_you_awake_right_now?" content="http://www.principiadiscordia.com/bip/5.php" />
   </head>
@@ -22,7 +22,7 @@ like. For libraries, semver is pretty good.
 
 <p>
 That said, I've run into a cult of programmers who see semver as the best thing next to Jesus coming back for solving
-all their problems. And they go to alllll the meetings. Some things I've heard:
+all their problems. And they go to alllll the meetings. Some things I've seen:
 
 <ul>
   <li> Making an API for an external bank? Put semver in the URL so they can pick their version! </li>
@@ -30,24 +30,39 @@ all their problems. And they go to alllll the meetings. Some things I've heard:
   <li> 0.2.191. In a Jenkins job. </li>
   <li> A Helm chart wraps a Docker container which wraps a binary, and two sidecars. They <i>all</i> have different
     semvers. Question for the audience: What broke?</li>
-  <li> Tried out Go modules yet? How many 0.0.0-x-y modules can you find. </li>
-  <li> Chef Cookbooks. Theres no better way to discover a patch bump was a lie than 2000 servers telling you in slack.</li>
+  <li> Try out Go modules! How many 0.0.0-x-y modules can you find? </li>
+  <li> Chef Cookbooks. There is no one better than old school SysAdmins for defining programatic interfaces. What better
+    way to discover a patch bump was a lie than 2000 servers telling you in slack?</li>
 </ul>
 
 <p>
-Maybe this is just from working on infrastructure, but if you make an API, don't break it. Make a new thing, name it
-something else, figure out the migration that makes sense for you and your customers. And if you're communicating major
-releases in a better way, theres probably a good chance you could learn to communicate features and bugfixes in better
-ways than trying to encode them into a single number.
+The key idea around semver is around choice. If your users have the ability to actively choose what version of your
+software they're using, it works. But large amounts of software is foundational, in that it needs to keep working for a
+long time to allow for progress to be made above it. This is common in infrastructure, where we are so low in the stack
+the ripple effects of changes end up costing an enormous amount.
+</p>
+
+</p>
+If your users don't have a choice of consuming your software (its behind an API, its a hidden script that produces a
+report, etc), <b>dont break your API.</b> Make a new thing, name it something else, figure out the migration that makes
+sense for you and your users. And if you learn to communicate major releases within the context of your users, theres
+probably a good chance you could use that knowledge to better communicate features and bugfixes than trying to encode
+it into a single number thats incidental to your package manager.
 </p>
 
 <p>
-I'd also like to note when dealing with automated CI/CD pipelines, the developer must always specify the semver to the
-automation. Determining what changed at an interface level in the best case requires scraping contrived commits or doc
-files in the repository, but for most of our industry you can assume a human is required.
+Do your users even care what version of your software they're using? Or do they just want it to work?
 </p>
 
-<h2> A Sane(?) Way Forward </h2>
+
+<p>
+Another small note, when dealing with automated CI/CD pipelines, the developer must always specify the semver to the
+automation. Semver throws a complexity wrench in what would otherwise be straight-forward automated releases. Determining
+what changed at an interface level in the best case requires scraping contrived commits or doc files in the repository,
+which must be reliably updated by every developer (lol).
+</p>
+
+<h2> An Alternative </h2>
 
 <p>
 Are you releasing software to other developers who are making concious choices on when and how to depend on your software,
@@ -57,8 +72,8 @@ as part of a dependency tool (like ruby gems) across an organizational boundary?
 <h4> OTHERWISE </h4>
 
 <p>
-When trying to communicate a feature or a bugfix, whats easier, "/foo was added in version 27" or "/foo was added in
-2008.02.28" ?
+Without outside information, when trying to communicate a feature or a bugfix, whats easier, "/foo was added in version
+27" or "/foo was added in 2008.02.28" ?
 </p><!–– 23 skidoo ––>
 
 <ul>
@@ -78,7 +93,7 @@ should be developer centric.
   So <b> lets use the commit date of the code.</b> (All artifacts are generated from source control right?)
   </li>
   <li>
-  But which branch? Oh no. So <b> lets add the commit sha.</b> But not too long there.
+  But which branch? Oh no. So <b> lets add the commit SHA.</b> But not too long there.
   </li>
 
   <li>
@@ -87,7 +102,7 @@ should be developer centric.
 </ul>
 
 So lets use:
-<h1> YEARMONTHDAYHOURMINUTE-SHORTGITSHA, ex: 201909031732-aa314da </h1>
+<h1> YEARMONTHDAYHOURMINUTE-GITSHA(short), ex: 201909031732-aa314da </h1>
 
 <p>
 <pre>
@@ -106,69 +121,5 @@ fi
 </pre>
 </p>
 
-<pre>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Of course its in UTC, why would you ask that, come on.
 </body>
 </html>
