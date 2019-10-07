@@ -72,6 +72,11 @@ as part of a dependency tool (like ruby gems) across an organizational boundary?
 <h4> OTHERWISE </h4>
 
 <p>
+You should probably just automatically generate the version based on source code for the benefit of everyone involved.
+So what would the best way to do that look like?
+</p>
+
+<p>
 Without outside information, when trying to communicate a feature or a bugfix, whats easier, "/foo was added in version
 27" or "/foo was added in 2008.02.28" ?
 </p><!–– 23 skidoo ––>
@@ -102,8 +107,9 @@ should be developer centric.
 </ul>
 
 So lets use:
-<h1> YEARMONTHDAYHOURMINUTE-GITSHA(short), ex: 201909031732-aa314da </h1>
+<h3> YEARMONTHDAYHOURMINUTE-GITSHA(short), ex: 201909031732-aa314da </h3>
 
+<h2> Sample Implementation </h2>
 <p>
 <pre>
 
