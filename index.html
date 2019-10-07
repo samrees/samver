@@ -54,6 +54,7 @@ it into a single number thats incidental to your package manager.
 Do your users even care what version of your software they're using? Or do they just want it to work?
 </p>
 
+
 <p>
 Another small note, when dealing with automated CI/CD pipelines, the developer must always specify the semver to the
 automation. Semver throws a complexity wrench in what would otherwise be straight-forward automated releases. Determining
@@ -75,9 +76,11 @@ Without outside information, when trying to communicate a feature or a bugfix, w
 27" or "/foo was added in 2008.02.28" ?
 </p><!–– 23 skidoo ––>
 
-<p><li>
-Right, so <b> lets use a date. </b>
-</p></li>
+<ul>
+  <li>
+  Right, so <b> lets use a date. </b>
+  </li>
+</ul>
 
 <p>
 Who's date? The date the customer sees it or the date the developer wrote it? Hopefully you have a continuous deployment
@@ -85,17 +88,18 @@ pipeline in place, in which the customer gets an evergreen version without think
 should be developer centric.
 </p>
 
-<p><li>
-So <b> lets use the commit date of the code.</b> (All artifacts are generated from source control right?)
-</p></li>
+<ul>
+  <li>
+  So <b> lets use the commit date of the code.</b> (All artifacts are generated from source control right?)
+  </li>
+  <li>
+  But which branch? Oh no. So <b> lets add the commit SHA.</b> But not too long there.
+  </li>
 
-<p><li>
-But which branch? Oh no. So <b> lets add the commit SHA.</b> But not too long there.
-</p></li>
-
-<p><li>
-  <b> Oh and I want it sortable. </b>
-</p></li>
+  <li>
+    <b> Oh and I want it sortable. </b>
+  </li>
+</ul>
 
 So lets use:
 <h1> YEARMONTHDAYHOURMINUTE-GITSHA(short), ex: 201909031732-aa314da </h1>
@@ -105,7 +109,7 @@ So lets use:
 
 #!/usr/bin/env bash
 # -- samver
-# -- in a git repo, spits out a good version
+# -- in a git repo, spits out a goodly version
 
 if date --version 2>/dev/null; then
   # GNU
