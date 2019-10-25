@@ -143,7 +143,20 @@ fi
 </li>
 </p>
 
-
+<p>
+<b> What do I do if I  have to use something insistent on semver? </b>
+<li>
+  If you have something awful like the helm packager for kubernetes, that FORCES you to use semver, that assumes that every service you build you
+  should indicate what changed with a single number, even if the helm chart you're deploying is a custom built artifact of tens of services bound
+  together as a monoliths, with hundreds of API endpoints... well I pity us both. You'll see errors like this:
+</li>
+<li>
+  Error: Error parsing version segment: strconv.ParseInt: parsing "20191025125407": value out of range
+</li>
+<li>
+  To avoid that, you can try a date format like this: +%Y%m%d.%H%M.%S, which prints something about like this: 20191025.1855.47. Or %N instead of %S on linux for nanoseconds.
+</li>
+</p>
 
 </body>
 </html>
