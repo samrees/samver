@@ -157,8 +157,8 @@ Error: Error parsing version segment: strconv.ParseInt: parsing "20191025125407"
 </li>
 <li>
   To avoid that, you can try a date format like this: +%Y%m%d.%H%M.%S, which prints something about like this: 20191025.1855.47. Or %N instead of %S on linux for nanoseconds.
-  You also need to adjust it to be + instead of a - for the build metadata, otherwise semver treats it as a "pre-release". AND pipe through the minor and patch versions through
-  something like $((10#${MINOR})) to ensure they don't have trailing zeros, as that makes for invalid semvers.
+  You also need to adjust it to be + instead of a - to be "build metadata" (ex 20191025.1855.47+a5a7ec2), otherwise semver treats it as a "pre-release". AND pipe through the minor and patch versions through
+  something like $((10#${MINOR})) in bash to do a base 10 conversion to ensure they don't have leading zeros (ex: 08), as that makes for invalid semvers.
 </li>
 </p>
 
