@@ -148,7 +148,7 @@ fi
 <li>
   If you have something awful like the helm packager for kubernetes, that FORCES you to use semver, that assumes that every service you build you
   should indicate what changed with a single number, even if the helm chart you're deploying is a custom built artifact of tens of services bound
-  together as a monoliths, with hundreds of API endpoints... well I pity us both. You'll see errors like this:
+  together as a monolith, with hundreds of API endpoints... well I pity us both. You'll see errors like this:
 </li>
 <li>
 <pre>
@@ -163,7 +163,7 @@ Error: Error parsing version segment: strconv.ParseInt: parsing "20191025125407"
 </p>
 
 <p>
-<b> Should I rethink the semantic overloading of strings in other context, like filenames? </b>
+<b> Should I rethink the semantic overloading of strings in other contexts, like filenames? </b>
 <li>
   Yes. Please. We can build better interfaces than this madness of strapping our lives and systems into strings.
 </li>
