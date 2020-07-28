@@ -43,11 +43,11 @@ the ripple effects of changes end up costing an enormous amount.
 </p>
 
 </p>
-If your users don't have a choice of consuming your software (its behind an API, its a hidden script that produces a
+If your users don't have a choice as to how they consume your software (its behind an API, its a hidden script that produces a
 report, etc), <b>dont break your API.</b> Make a new thing, name it something else, figure out the migration that makes
 sense for you and your users. And if you learn to communicate major releases within the context of your users, theres
 probably a good chance you could use that knowledge to better communicate features and bugfixes than trying to encode
-it into a single number thats incidental to your package manager.
+it into a single number that's an incidental string to your package manager.
 </p>
 
 <p>
@@ -59,7 +59,9 @@ Do your users even care what version of your software they're using? Or do they 
 Another small note, when dealing with automated CI/CD pipelines, the developer must always specify the semver to the
 automation. Semver throws a complexity wrench in what would otherwise be straight-forward automated releases. Determining
 what changed at an interface level in the best case requires scraping contrived commits or doc files in the repository,
-which must be reliably updated by every developer (lol).
+which must be reliably updated by every developer (lol). There is a way to programatically compare an interface and bump
+a semver string automatically, but down that path lies Swagger diffing and RAML and "Codeless" startups, and ahhh good luck
+with that.
 </p>
 
 <h2> An Alternative </h2>
@@ -156,18 +158,23 @@ Error: Error parsing version segment: strconv.ParseInt: parsing "20191025125407"
 </pre>
 </li>
 <li>
-  To avoid that, you can try a date format like this: +%Y%m%d.%H%M.%S, which prints something about like this: 20191025.1855.47. Or %N instead of %S on linux for nanoseconds.
+  To avoid that, you can fool it by trying a date format like this: +%Y%m%d.%H%M.%S, which prints something about like this: 20191025.1855.47. Or %N instead of %S on linux (not bsd bfytw) for nanoseconds.
   You also need to adjust it to be + instead of a - to be "build metadata" (ex 20191025.1855.47+a5a7ec2), otherwise semver treats it as a "pre-release". AND pipe through the minor and patch versions through
-  something like $((10#${MINOR})) in bash to do a base 10 conversion to ensure they don't have leading zeros (ex: 08), as that makes for invalid semvers.
+  something like $((10#${MINOR})) in bash to do a base 10 conversion to ensure they don't have leading zeros (ex: 2019025.0859.01), as that leading zero makes for invalid semvers.
 </li>
 </p>
 
 <p>
 <b> Should I rethink the semantic overloading of strings in other contexts, like filenames? </b>
 <li>
-  Yes. Please. We can build better interfaces than this madness of contortionism, stuffing our lives and systems into strings.
+  Yes. Please. We can build better interfaces than this madness of contortionism, stuffing our lives and systems into strings. Store the tiniest pointer you
+  can back to some sort of real database, even if its just a UUID pointed to a JSON in whatever key value store that looks handy. You will not get the interface
+  correct the first time, I know, I've tried, many times. Updating the "db" is easier than updating the elements out in the wild, every time.
 </li>
 </p>
 
+--
+Sam Rees, Computer Plumber
+Chicago, IL
 </body>
 </html>
