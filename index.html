@@ -118,7 +118,22 @@ should be developer centric.
 </ul>
 
 So lets use:
-<h3> YEARMONTHDAYHOURMINUTE-GITSHA(short), ex: 201909031732-aa314da </h3>
+<h4> YEARMONTHDAYHOURMINUTE-GITSHA(short), ex: 201909031732-aa314da </h4>
+
+Or in its semver compatible format:
+
+<h4> YEARMONTHDAY.HOURMINUTE.SECOND+GITSHA(short), ex: 20190903.1732.47-aa314da <h4>
+
+<h2> Sorting Samver </h2>
+
+<p>
+Use standard unix `sort` in any flavor installed on any machine. Be aware there is no way to correctly sort commits
+made in the same second.
+</p>
+
+<p>
+Meanwhile if you are stuck in semver land, you can use <a href='https://github.com/samrees/semversort'>https://github.com/samrees/semversort</a>.
+</p>
 
 <h2> Sample Implementation </h2>
 <p>
