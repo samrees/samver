@@ -186,6 +186,16 @@ Error: Error parsing version segment: strconv.ParseInt: parsing "20191025125407"
   You also need to adjust it to be + instead of a - to be "build metadata" (ex 20191025.1855.47+a5a7ec2), otherwise semver treats it as a "pre-release". AND pipe through the minor and patch versions through
   something like $((10#${MINOR})) in bash to do a base 10 conversion to ensure they don't have leading zeros (ex: 2019025.0859.01), as that leading zero makes for invalid semvers.
 </li>
+<li>
+<pre>
+Error parsing version '20200821.1845.33-0276160': Version segment starts with 0
+</pre>
+</li>
+<li>
+  This one honestly looks like semver has encoded a type system bug into the spec. So while pre-releases seem like arbitrary strings in all other cases, if they happen to look like a number they cannot have leading zeros.
+  That means our foolery causes some libraries to toss errors. <a href="https://semver.org/#spec-item-9">https://semver.org/#spec-item-9</a> This can be fixed by replacing leading zeros with a letter: sed -E '/0[0-9]+$/s/^0/z/'
+</li>
+
 </p>
 
 <p>
